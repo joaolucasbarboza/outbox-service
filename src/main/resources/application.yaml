@@ -1,3 +1,22 @@
+server:
+  port: 8080
+
 spring:
   application:
     name: outbox-service
+
+  kafka:
+    bootstrap-servers: ${KAFKA_BROKER:localhost:9092}
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${SPRING_DATASOURCE_HOST:outbox-db}:${SPRING_DATASOURCE_PORT:5432}/${SPRING_DATASOURCE_DBNAME:outbox-db}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
