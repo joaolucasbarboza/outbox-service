@@ -1,9 +1,31 @@
 services:
-  postgres:
-    image: 'postgres:latest'
+  outbox-db:
+    container_name: outbox-db
+    image: postgres:15-alpine
     environment:
-      - 'POSTGRES_DB=mydatabase'
-      - 'POSTGRES_PASSWORD=secret'
-      - 'POSTGRES_USER=myuser'
+      - POSTGRES_DB=outbox-db
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
     ports:
-      - '5432'
+      - "5432:5432"
+
+  outbox-service:
+    build: .
+    container_name: outbox-service
+    depends_on:
+      - outbox-db
+    networks:
+      - orchestrator-saga
+    environment:
+      - KAFKA_BROKER=kafka:29092
+      - SPRING_DATASOURCE_HOST=outbox-db
+      - SPRING_DATASOURCE_PORT=5432
+      - SPRING_DATASOURCE_DBNAME=outbox-db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    ports:
+      - "8080:8080"
+
+networks:
+  orchestrator-saga:
+    driver: bridge
