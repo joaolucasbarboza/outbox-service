@@ -24,6 +24,7 @@ public class EventEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "event_seq")
     private Long id;
 
+    @Enumerated(EnumType.STRING)
     private EStatusEvent status = EStatusEvent.PENDING;
 
     private String topic;
