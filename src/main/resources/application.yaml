@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8087
 
 spring:
   application:
@@ -10,7 +10,7 @@ spring:
 
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://${SPRING_DATASOURCE_HOST:outbox-db}:${SPRING_DATASOURCE_PORT:5432}/${SPRING_DATASOURCE_DBNAME:outbox-db}
+    url: jdbc:postgresql://localhost:5435/outbox-db
     username: ${SPRING_DATASOURCE_USERNAME:postgres}
     password: ${SPRING_DATASOURCE_PASSWORD:postgres}
 
