@@ -30,7 +30,7 @@ public class OutboxService {
 
         if (!isEmpty(events)) {
             events.forEach(event -> {
-                String eventJson = jsonUtil.toJson(event);
+                String eventJson = jsonUtil.toJson(event.getPayload());
                 event.setStatus(EStatusEvent.SUCCESS);
                 eventRepository.save(event);
                 producer.send(event.getTopic(), eventJson);
